@@ -62,10 +62,10 @@ class DatabaseSeeder extends Seeder
         ));
         utilisateur::insert(array(
             array(
-                'idUtilisateur' => 1, 'nomUtilisateur' =>'HugoA','nom' =>'Araujo', 'Prenom' => 'Hugo','mail'=>'araujohugo@msn.com', 'motDePasseUtilisateur' => Hash::make('hugoContreInjections'), 'estInscrit' => true, 'isAdministrateur' => true ,
+                'idUtilisateur' => 1, 'nomUtilisateur' =>'Jonathan','nom' =>'Poireau', 'Prenom' => 'Hugo','mail'=>'jonathan.poireau@yahoo.com', 'motDePasseUtilisateur' => Hash::make('djojo'), 'estInscrit' => true, 'isAdministrateur' => true ,
             ),
             array(
-                'idUtilisateur' => 2, 'nomUtilisateur' => 'RomainT','nom' =>'Thiriot', 'Prenom' => 'Romain','mail'=>'thiriot2002@gmail.com', 'motDePasseUtilisateur' => Hash::make('thiriotMdp'), 'estInscrit' => true, 'isAdministrateur' => false ,
+                'idUtilisateur' => 2, 'nomUtilisateur' => 'Arun','nom' =>'Carro', 'Prenom' => 'Romain','mail'=>'arun.carro@gmail.com', 'motDePasseUtilisateur' => Hash::make('arun'), 'estInscrit' => true, 'isAdministrateur' => false ,
             ),
             array(
                 'idUtilisateur' => 3, 'nomUtilisateur' => 'JulienB','nom' =>'Bois', 'Prenom' => 'Julien','mail'=>'julien.bois.techer@gmail.com', 'motDePasseUtilisateur' => Hash::make('julienBdd'), 'estInscrit' => true, 'isAdministrateur' => false ,

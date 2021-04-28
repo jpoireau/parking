@@ -49,7 +49,7 @@
             </script>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+            <button type="submit" class="btn btn-warning btn-block">Connexion</button>
         </div>
     </form>
     <div class="clearfix">
