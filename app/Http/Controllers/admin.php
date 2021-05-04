@@ -1,4 +1,5 @@
 <?php
+// fonctions utilisées : rêquetes
 
 namespace App\Http\Controllers;
 
@@ -23,6 +24,7 @@ class admin extends Controller
         $id = $_POST['id'];
         $mdp = $_POST['motDePasse'];
         $liste = 1;
+        // requete utilisateur
         utilisateur::where("idUtilisateur","=", $idUtilisateur)->update(array('motDePasseUtilisateur' => Hash::make($mdp)));
 
         $req = utilisateur::select('mail')->where('idUtilisateur', '=', $idUtilisateur)->get();

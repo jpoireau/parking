@@ -27,6 +27,7 @@ class ChangeMDP extends Mailable implements ShouldQueue
      *
      * @return $this
      */
+    // fonction qui permet d'envoyer un mail
     public function build()
     {
         return $this->subject('Reservation Parking - Réinitialisation du mot de passe')->view('admin.mail');
