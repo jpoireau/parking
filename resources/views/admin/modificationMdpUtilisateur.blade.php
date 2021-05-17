@@ -31,7 +31,7 @@
 @extends('head.admin')
 @section('content')
 <div class="shadow-lg p-3 mb-5 bg-white rounded">
-    <h3 align="center" style="color:#00DFF9";>MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR : </h3>
+    <h3 align="center" style="color:#FFBF00";>MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR : </h3>
   </div>
   <div class="login-form">
     <form action="/updateMotDePasse" method="post">
@@ -44,7 +44,7 @@
             <input type="password" name="motDePasse" class="form-control" maxlength="30" required>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Changer le mot de passe</button>
+            <button type="submit" class="btn btn-info btn-block">Changer le mot de passe</button>
         </div>
     </form>
 </div>

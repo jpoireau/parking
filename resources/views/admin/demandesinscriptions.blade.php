@@ -3,10 +3,10 @@
 
 <div style="text-align: center;">
 <div class="shadow-lg p-3 mb-5 bg-white rounded">
-    <h3 align="center" style="color:#00DFF9";>DEMANDES INSCRIPTIONS</h3>
+    <h3 align="center" style="color:#FFBF00";>DEMANDES INSCRIPTIONS</h3>
     <br><br>
     <a href = "toutaccepter" class="btn btn-primary">Accepter toutes les inscriptions </a>
-    <a href = "toutrefuser" class="btn btn-primary">Refuser toutes les inscriptions </a>
+    <a href = "toutrefuser" class="btn btn-danger">Refuser toutes les inscriptions </a>
     <div class="container mb-3 mt-3">
         <table class="table">
             <thead>

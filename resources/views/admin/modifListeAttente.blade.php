@@ -1,7 +1,7 @@
 @extends('head.admin')
 @section('content')
 <div class="shadow-lg p-3 mb-5 bg-white rounded">
-    <h3 align="center" style="color:#00DFF9" ;>MODIFICATION DE LA LISTE D'ATTENTE</h3>
+    <h3 align="center" style="color:#FFBF00" ;>MODIFICATION DE LA LISTE D'ATTENTE</h3>
 </div>
 <br>
 
@@ -26,7 +26,7 @@
         <br><br><br>
         <input type="hidden" name="id" value={{$_GET['id']}}>
         <div style="text-align: right">
-            <button type="submit" class="btn btn-primary" value="valider">Valider</button>
+            <button type="submit" class="btn btn-warning" value="valider">Valider</button>
         </div>
     </form>
 </div>
