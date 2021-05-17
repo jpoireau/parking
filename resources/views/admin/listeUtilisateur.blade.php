@@ -6,9 +6,9 @@
     <form action="demandesinscriptions" method="get">
         @csrf
         <input type="hidden" name="id" value={{$_POST['id']}}>
-        <button type="submit" class="btn btn-info">Voir demandes d'inscription</button>
+        <button type="submit" class="btn btn-warning">Voir demandes d'inscription</button>
     </form>
-    <h3 align="center" style="color:#00DFF9">LISTE DES UTILISATEURS</h3>
+    <h3 align="center" style="color:#FFBF00">LISTE DES UTILISATEURS</h3>
 </div>
     <table class="table">
 
@@ -32,9 +32,9 @@
                 <td>{{$listeUtilisateurdata->mail}}</td>
                 <td>
                     @if ($listeUtilisateurdata->motDePasseOublie == 0)
-                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        <button type="submit" class="btn btn-warning">Modifier</button>
                     @else
-                        <button type="submit" class="btn btn-danger">Modifier</button>
+                        <button type="submit" class="btn btn-warning">Modifier</button>
                     @endif
                 </td>
             </tr>
