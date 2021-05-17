@@ -15,11 +15,11 @@ class user extends Controller
 {
     public function reservation()
     {
-        $requete = utilisateur::select('*')->where('idUtilisateur', '=',$_POST['id'])->get();
+        $requete = utilisateur::select('*')->where('idUtilisateur', '=', $_POST['id'])->get();
         foreach ($requete as $requetedata) {
-            $id = $requetedata -> idUtilisateur;
-            $nom = $requetedata -> nom;
-            $prenom = $requetedata -> prenom;
+            $id = $requetedata->idUtilisateur;
+            $nom = $requetedata->nom;
+            $prenom = $requetedata->prenom;
         }
         $info = array(
             0 => $id,
@@ -38,16 +38,15 @@ class user extends Controller
             $dbreserv[0] = 1;
         }
 
-        $dbreserv[1] = reservation::leftJoin('parkings','idParking','=','reservations.numeroPlace')->select('*')->where('utilisateur','=',$info)->get();
+        $dbreserv[1] = reservation::leftJoin('parkings', 'idParking', '=', 'reservations.numeroPlace')->select('*')->where('utilisateur', '=', $info)->get();
 
         return view('user.reservation', compact('info'), compact('dbreserv'));
     }
 
     public function annule()
     {
-        $annule = reservation::
-        where('idReservation', '=', $_POST['id'])
-        ->update(['etatReservation' => 1]);
+        $annule = reservation::where('idReservation', '=', $_POST['id'])
+            ->update(['etatReservation' => 1]);
         $id = $_POST['iduser'];
         $action = $_POST['action'];
         return view('user.acceuiluser', compact('action'), compact('id'));
@@ -55,11 +54,11 @@ class user extends Controller
 
     public function formMDP()
     {
-        $requete = utilisateur::select('*')->where('idUtilisateur', '=',$_POST['id'])->get();
+        $requete = utilisateur::select('*')->where('idUtilisateur', '=', $_POST['id'])->get();
         foreach ($requete as $requetedata) {
-            $id = $requetedata -> idUtilisateur;
-            $nom = $requetedata -> nom;
-            $prenom = $requetedata -> prenom;
+            $id = $requetedata->idUtilisateur;
+            $nom = $requetedata->nom;
+            $prenom = $requetedata->prenom;
         }
         $info = array(
             0 => $id,
@@ -80,18 +79,23 @@ class user extends Controller
         );
         $connect = utilisateur::select('motDePasseUtilisateur')->where('idUtilisateur', '=', $user[0])->get();
         foreach ($connect as $connectdata) {
-            $old = $connectdata -> motDePasseUtilisateur;
+            $old = $connectdata->motDePasseUtilisateur;
         }
         if (Hash::check($_POST['old'], $old)) {
-            $update = utilisateur::
-            where('idUtilisateur', '=', $user[0])
-            ->update(['motDePasseUtilisateur' => Hash::make($_POST['new'])]);
+            $update = utilisateur::where('idUtilisateur', '=', $user[0])
+                ->update(['motDePasseUtilisateur' => Hash::make($_POST['new'])]);
             $user[1] = 2;
-        }
-        else {
+        } else {
             $user[1] = 1;
         }
-        return view('user.acceuiluser', compact('action','user'));
+        return view('user.acceuiluser', compact('action', 'user'));
+    }
+
+    public function test()
+    {
+        $notein = reservation::select('parkings.numeroPlace AS numeroPlace')->join('utilisateurs', 'reservations.utilisateur', '=', 'idUtilisateur')->join('parkings', 'parkings.idParking', '=', 'reservations.numeroPlace')->where('dateFin', '>', date('Y-m-d'))->where('etatReservation', '=', 0)->get()->toArray();
+        $placesLibres = parking::select('idParking', 'numeroPlace')->whereNotIn('idParking', $notein)->get();
+        return $placesLibres;
     }
 
     public function ReservationExe()
@@ -99,13 +103,14 @@ class user extends Controller
         $action = 1;
         $id = $_POST['iduser'];
         $date = new DateTime();
-        $placesLibres = parking::leftJoin('reservations', 'reservations.numeroPlace','=','parkings.idParking')->
-                          select('parkings.idParking')->where('dateFin','<', $date->format('Y-m-d'))
-                                                        ->orWhere('etatReservation','=', 1)->distinct()->get();
+        $notein = reservation::select('parkings.numeroPlace AS numeroPlace')->join('utilisateurs', 'reservations.utilisateur', '=', 'idUtilisateur')->join('parkings', 'parkings.idParking', '=', 'reservations.numeroPlace')->where('dateFin', '>', date('Y-m-d'))->where('etatReservation', '=', 0)->get()->toArray();
+        $placesLibres = parking::select('idParking')->whereNotIn('idParking', $notein)->get();
+        // $placesLibres = parking::leftJoin('reservations', 'reservations.numeroPlace','=','parkings.idParking')->
+        //                   select('parkings.idParking')->where('dateFin','<', $date->format('Y-m-d'))
+        //                                                 ->orWhere('etatReservation','=', 1)->distinct()->get();
         $nbPlacesLibres = count($placesLibres);
-        $max = reservation::select('idReservation')->max('idReservation') + 1;
         $attente = reservation::select('positionFIleAttente')->max('positionFileAttente') + 1;
-        if ($nbPlacesLibres >= 0) {
+        if ($nbPlacesLibres > 0) {
             $nbPlacesLibres--;
             $input = rand(0, $nbPlacesLibres);
             $nbplace = $placesLibres[$input];
@@ -113,9 +118,8 @@ class user extends Controller
             $nbplace = explode('}', $nbplace[1]);
             $nbplace = $nbplace[0];
             $datedebut = date('Y-m-d');
-            $datefin = date('Y-m-t', strtotime('+1 month'));
-            $requete = reservation::insert([
-                'idReservation' => $max,
+            $datefin = date('Y-m-d', strtotime('+1 month'));
+            reservation::insert([
                 'positionFileAttente' => null,
                 'numeroPlace' => $nbplace,
                 'utilisateur' => $id,
@@ -123,10 +127,8 @@ class user extends Controller
                 'dateDebut' => $datedebut,
                 'dateFin' => $datefin,
             ]);
-        }
-        else {
-            $requete = reservation::insert([
-                'idReservation' => $max,
+        } else {
+            reservation::insert([
                 'positionFileAttente' => $attente,
                 'numeroPlace' => null,
                 'utilisateur' => $id,
@@ -135,8 +137,6 @@ class user extends Controller
                 'dateFin' => NULL,
             ]);
         }
-        $max = reservation::select('idReservation')->max('idReservation');
-        return view('user.acceuiluser', compact('action','id'));
+        return view('user.acceuiluser', compact('action', 'id'));
     }
-
 }

@@ -18,11 +18,11 @@ use App\Http\Controllers\user;
 |
 */
 
-Route::get('/', function () {
-    return view('pageconnexion');
-});
+Route::get('test', [user::class, 'test']);
 
-Route::post('/', [connexion::class, 'connexion']);
+Route::get('/', [connexion::class, 'verification']);
+
+Route::post('/connexion', [connexion::class, 'connexion']);
 
 Route::get('Inscription', function () {
     return view('pageinscription');
@@ -47,15 +47,25 @@ Route::post('ListeAttente', [admin::class, 'listeattente']);
 
 Route::post('ListeUtilisateur', [admin::class, 'listeutilisateur']);
 
+Route::post('ListePlace', [admin::class, 'listeplace']);
+
+Route::post('AjoutPlace', [admin::class, 'ajoutplace']);
+
+Route::post('DeletePlace', [admin::class, 'deleteplace']);
+
+Route::post('ListeReservation', [admin::class, 'listereservation']);
+
+Route::post('AnnuleReservation', [admin::class, 'annulereservation']);
+
 Route::post('HistoAttributionPlace', [admin::class, 'histoattributionplace']);
 
 Route::post('modificationFileAttente/updateFileAttente/{idReservation}', [admin::class, 'updateFileAttente']);
 
 Route::get('modificationFileAttente/{idReservation}', [admin::class, 'show']);
 
-Route::get('toutaccepter', [admin::class,'accepterToutesLesInscriptions']);
+Route::get('toutaccepter', [admin::class, 'accepterToutesLesInscriptions']);
 
-Route::get('toutrefuser', [admin::class,'refuserToutesLesInscriptions']);
+Route::get('toutrefuser', [admin::class, 'refuserToutesLesInscriptions']);
 
 Route::get('accepterInscription/{idUtilisateur}', [admin::class, 'accepterInscription']);
 
@@ -72,12 +82,12 @@ Route::post('ModificationMDP', [user::class, 'formMDP']);
 Route::post('ModificationConfirmation', [user::class, 'confirmMDP']);
 
 Route::get('testinscription', function () {
-    return view ('testinscriptionform');
+    return view('testinscriptionform');
 });
 
 Route::post('testinscriptionresultat', [test::class, 'testinscription']);
 
-Route::get('/modificationMdpUtilisateur/{idUtilisateur}',[admin::class,'showModifMdp']);
+Route::get('/modificationMdpUtilisateur/{idUtilisateur}', [admin::class, 'showModifMdp']);
 
 Route::post('/updateMotDePasse', [admin::class, 'updateMotDePasse']);
 
